@@ -17,6 +17,13 @@ object Deps {
         val contraintlayout = "androidx.constraintlayout:constraintlayout:2.0.4"
     }
 
+    object Hilt {
+        private val version = "2.37"
+        val plugin = "com.google.dagger:hilt-android-gradle-plugin:$version"
+        val android = "com.google.dagger:hilt-android:$version"
+        val compiler = "com.google.dagger:hilt-compiler:$version"
+    }
+
     object Test {
         val junit = "junit:junit:4.13.2"
         val androidJUnit = "androidx.test.ext:junit:1.1.3"

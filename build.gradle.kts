@@ -7,6 +7,7 @@ buildscript {
     dependencies {
         classpath(Deps.Gradle.plugin)
         classpath(Deps.Kotlin.plugin)
+        classpath(Deps.Hilt.plugin)
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
