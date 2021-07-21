@@ -2,6 +2,7 @@ package com.improve777.tapas.data.repository
 
 import com.improve777.tapas.State
 import com.improve777.tapas.domain.model.Browse
+import com.improve777.tapas.domain.model.SeriesInfo
 import com.improve777.tapas.domain.repository.BrowseRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +29,24 @@ class BrowseRepositoryImpl : BrowseRepository {
             )
 
             emit(State.Success(items))
+        }
+    }
+
+    override fun getSeriesInfo(seriesId: Int): Flow<State<SeriesInfo>> {
+        return flow {
+            emit(State.Loading)
+
+            delay(300)
+
+            val seriesInfo = SeriesInfo(
+                id = 0,
+                title = "Love Lesson",
+                thumbnailUrl = "https://d30womf5coomej.cloudfront.net/sa/90/3887becb-a368-450f-b6c4-7b2efd5aeddf.jpg",
+                creator = "Kuaikan Comics",
+                isBookCover = false,
+            )
+
+            emit(State.Success(seriesInfo))
         }
     }
 }
