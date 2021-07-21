@@ -20,7 +20,11 @@ class BrowseViewModel @Inject constructor(
     private val _browseList = MutableLiveData<List<Browse>>()
     val browseList: LiveData<List<Browse>> = _browseList
 
+    private var page = 1
+
     fun getBrowseList(page: Int) {
+        this.page = page
+
         viewModelScope.launch {
             browseRepository.getBrowseList(page)
                 .collect(this@BrowseViewModel::collectBrowseList)
@@ -30,7 +34,8 @@ class BrowseViewModel @Inject constructor(
     private suspend fun collectBrowseList(state: State<List<Browse>>) {
         when (state) {
             is State.Success -> {
-                _browseList.value = (_browseList.value ?: emptyList()) + state.data
+                val currentList = if (page == 1) emptyList() else (_browseList.value ?: emptyList())
+                _browseList.value = currentList + state.data
             }
             is State.Error -> {
                 // TODO: 2021/07/21 에러 처리

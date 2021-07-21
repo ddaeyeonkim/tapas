@@ -50,6 +50,7 @@ dependencies {
     implementation(Deps.Android.contraintlayout)
     implementation(Deps.Android.activityKtx)
     implementation(Deps.Android.lifecycleViewModelKtx)
+    implementation(Deps.Android.swiperefreshlayout)
 
     testImplementation(Deps.Test.junit)
     androidTestImplementation(Deps.Test.androidJUnit)

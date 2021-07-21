@@ -30,6 +30,11 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
 
     private fun initView() {
         binding.rvBrowse.adapter = browseAdapter
+
+        binding.srlBrowse.setOnRefreshListener {
+            viewModel.getBrowseList(1)
+            binding.srlBrowse.isRefreshing = false
+        }
     }
 
     private fun observeViewModel() {

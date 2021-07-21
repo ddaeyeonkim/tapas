@@ -19,6 +19,9 @@ object Deps {
         val activityKtx = "androidx.activity:activity-ktx:1.3.0-rc02"
         // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-viewmodel-ktx
         val lifecycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+        // https://mvnrepository.com/artifact/androidx.swiperefreshlayout/swiperefreshlayout
+        val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
     }
 
     object Hilt {
