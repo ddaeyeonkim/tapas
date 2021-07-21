@@ -7,12 +7,12 @@ import androidx.core.view.isVisible
 import com.improve777.tapas.base.BaseAdapter
 import com.improve777.tapas.base.BaseViewHolder
 import com.improve777.tapas.databinding.ItemBrowseBinding
-import com.improve777.tapas.domain.model.Browse
+import com.improve777.tapas.domain.model.Series
 import com.improve777.tapas.ui.utils.loadUrl
 
-class BrowseAdapter(
+class SeriesAdapter(
     private val onItemClick: () -> Unit,
-) : BaseAdapter<Browse, ViewHolder>() {
+) : BaseAdapter<Series, ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemBrowseBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -23,9 +23,9 @@ class BrowseAdapter(
     }
 }
 
-class ViewHolder(private val binding: ItemBrowseBinding) : BaseViewHolder<Browse>(binding.root) {
+class ViewHolder(private val binding: ItemBrowseBinding) : BaseViewHolder<Series>(binding.root) {
 
-    override fun bind(item: Browse) {
+    override fun bind(item: Series) {
         val layoutParams = binding.ivThumbnail.layoutParams as? ConstraintLayout.LayoutParams
         layoutParams?.dimensionRatio = if (item.isBookCover) "1:1.5" else "1:1"
         binding.ivThumbnail.layoutParams = layoutParams

@@ -21,7 +21,7 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
 
     private val viewModel: BrowseViewModel by viewModels()
 
-    private val browseAdapter = BrowseAdapter {
+    private val browseAdapter = SeriesAdapter {
         viewModel.goToSeriesView()
     }
 
@@ -55,7 +55,7 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
     }
 
     private fun observeViewModel() {
-        viewModel.browseList.observe(this) {
+        viewModel.seriesList.observe(this) {
             browseAdapter.submitList(it)
         }
 

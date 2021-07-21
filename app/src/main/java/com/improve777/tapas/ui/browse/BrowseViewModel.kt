@@ -8,6 +8,7 @@ import com.improve777.tapas.base.BaseViewModel
 import com.improve777.tapas.domain.model.Browse
 import com.improve777.tapas.domain.model.Error
 import com.improve777.tapas.domain.model.Pagination
+import com.improve777.tapas.domain.model.Series
 import com.improve777.tapas.domain.model.SeriesInfo
 import com.improve777.tapas.domain.repository.BrowseRepository
 import com.improve777.tapas.ui.utils.Event
@@ -21,8 +22,8 @@ class BrowseViewModel @Inject constructor(
     private val browseRepository: BrowseRepository,
 ) : BaseViewModel() {
 
-    private val _browseList = MutableLiveData<List<Browse>>()
-    val browseList: LiveData<List<Browse>> = _browseList
+    private val _seriesList = MutableLiveData<List<Series>>()
+    val seriesList: LiveData<List<Series>> = _seriesList
 
     private val _error = MutableLiveData<Error>()
     val error: LiveData<Error> = _error
@@ -41,7 +42,7 @@ class BrowseViewModel @Inject constructor(
         }
 
         if (!loadMore) {
-            _browseList.value = emptyList()
+            _seriesList.value = emptyList()
         }
 
         viewModelScope.launch {
@@ -52,20 +53,20 @@ class BrowseViewModel @Inject constructor(
         }
     }
 
-    private suspend fun collectBrowseList(state: State<List<Browse>>) {
+    private suspend fun collectBrowseList(state: State<Browse>) {
         when (state) {
             is State.Success -> {
-                pagination = Pagination(pagination.page + 1, true)
+                pagination = state.data.pagination
 
-                val currentList = _browseList.value ?: emptyList()
-                _browseList.value = currentList + state.data
+                val currentList = _seriesList.value ?: emptyList()
+                _seriesList.value = currentList + state.data.seriesList
 
-                if (_browseList.value.isNullOrEmpty()) {
+                if (_seriesList.value.isNullOrEmpty()) {
                     _error.value = Error.Empty
                 }
             }
             is State.Error -> {
-                if (_browseList.value.isNullOrEmpty()) {
+                if (_seriesList.value.isNullOrEmpty()) {
                     _error.value = Error.Empty
                 }
             }
