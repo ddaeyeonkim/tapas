@@ -6,6 +6,7 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import com.improve777.tapas.base.BaseActivity
 import com.improve777.tapas.databinding.ActivityBrowseBinding
@@ -40,6 +41,11 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
     private fun observeViewModel() {
         viewModel.browseList.observe(this) {
             browseAdapter.submitList(it)
+        }
+
+        viewModel.error.observe(this) {
+            binding.rvBrowse.isVisible = false
+            binding.layoutError.content.isVisible = true
         }
     }
 

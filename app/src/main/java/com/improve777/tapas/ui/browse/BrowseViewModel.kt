@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.improve777.tapas.State
 import com.improve777.tapas.base.BaseViewModel
 import com.improve777.tapas.domain.model.Browse
+import com.improve777.tapas.domain.model.Error
 import com.improve777.tapas.domain.repository.BrowseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -19,6 +20,9 @@ class BrowseViewModel @Inject constructor(
 
     private val _browseList = MutableLiveData<List<Browse>>()
     val browseList: LiveData<List<Browse>> = _browseList
+
+    private val _error = MutableLiveData<Error>()
+    val error: LiveData<Error> = _error
 
     private var page = 1
 
@@ -36,9 +40,15 @@ class BrowseViewModel @Inject constructor(
             is State.Success -> {
                 val currentList = if (page == 1) emptyList() else (_browseList.value ?: emptyList())
                 _browseList.value = currentList + state.data
+
+                if (_browseList.value.isNullOrEmpty()) {
+                    _error.value = Error.Empty
+                }
             }
             is State.Error -> {
-                // TODO: 2021/07/21 에러 처리
+                if (_browseList.value.isNullOrEmpty()) {
+                    _error.value = Error.Empty
+                }
             }
             State.Loading -> {
                 // TODO: 2021/07/21 로딩 처리
@@ -46,3 +56,4 @@ class BrowseViewModel @Inject constructor(
         }
     }
 }
+
