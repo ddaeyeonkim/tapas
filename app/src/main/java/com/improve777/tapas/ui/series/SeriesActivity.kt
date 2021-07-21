@@ -47,6 +47,10 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
         })
 
         binding.rvSeries.adapter = episodeAdapter
+
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun observeViewModel() {
