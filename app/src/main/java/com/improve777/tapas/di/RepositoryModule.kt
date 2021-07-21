@@ -1,5 +1,6 @@
 package com.improve777.tapas.di
 
+import com.improve777.tapas.data.remote.api.SeriesApi
 import com.improve777.tapas.data.repository.BrowseRepositoryImpl
 import com.improve777.tapas.domain.repository.BrowseRepository
 import dagger.Module
@@ -14,7 +15,7 @@ class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideBrowseRepository(): BrowseRepository {
-        return BrowseRepositoryImpl()
+    fun provideBrowseRepository(seriesApi: SeriesApi): BrowseRepository {
+        return BrowseRepositoryImpl(seriesApi)
     }
 }
