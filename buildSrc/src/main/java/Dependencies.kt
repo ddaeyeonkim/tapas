@@ -42,4 +42,11 @@ object Deps {
         val core = "com.github.bumptech.glide:glide:$version"
         val compiler = "com.github.bumptech.glide:compiler:$version"
     }
+
+    object Retrofit {
+        private const val version = "2.9.0"
+        val core = "com.squareup.retrofit2:retrofit:$version"
+        val gsonConvertor = "com.squareup.retrofit2:converter-gson:$version"
+        val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:4.9.1"
+    }
 }

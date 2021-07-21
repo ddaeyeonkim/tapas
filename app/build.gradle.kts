@@ -62,4 +62,8 @@ dependencies {
 
     implementation(Deps.Glide.core)
     kapt(Deps.Glide.compiler)
+
+    implementation(Deps.Retrofit.core)
+    implementation(Deps.Retrofit.gsonConvertor)
+    implementation(Deps.Retrofit.loggingInterceptor)
 }
