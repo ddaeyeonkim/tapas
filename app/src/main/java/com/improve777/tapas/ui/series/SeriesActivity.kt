@@ -47,6 +47,7 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
         })
 
         binding.rvSeries.adapter = episodeAdapter
+        binding.rvSeries.addItemDecoration(EpisodeItemDecoration())
 
         binding.ivBack.setOnClickListener {
             finish()
