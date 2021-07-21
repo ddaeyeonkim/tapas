@@ -11,15 +11,16 @@ import com.improve777.tapas.domain.model.Series
 import com.improve777.tapas.ui.utils.loadUrl
 
 class SeriesAdapter(
-    private val onItemClick: () -> Unit,
+    private val onItemClick: (seriesId: Int) -> Unit,
 ) : BaseAdapter<Series, ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemBrowseBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val viewHolder = ViewHolder(binding)
         binding.root.setOnClickListener {
-            onItemClick()
+            onItemClick(items[viewHolder.adapterPosition].id)
         }
-        return ViewHolder(binding)
+        return viewHolder
     }
 }
 

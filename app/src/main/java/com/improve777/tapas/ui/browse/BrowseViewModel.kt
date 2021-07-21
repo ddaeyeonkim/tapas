@@ -36,24 +36,25 @@ class BrowseViewModel @Inject constructor(
 
     private var pagination = Pagination(1, true)
 
-    fun getBrowseList(loadMore: Boolean = false) {
-        if (!pagination.hasNext) {
+    fun loadBrowse(loadMore: Boolean = false) {
+        if (loadMore && !pagination.hasNext) {
             return
         }
 
         if (!loadMore) {
+            pagination = Pagination(1, true)
             _seriesList.value = emptyList()
         }
 
         viewModelScope.launch {
-            browseRepository.getBrowseList(pagination.page)
+            browseRepository.getBrowse(pagination.page)
                 .collect(this@BrowseViewModel::collectBrowseList)
 
             _loading.value = false
         }
     }
 
-    private suspend fun collectBrowseList(state: State<Browse>) {
+    private fun collectBrowseList(state: State<Browse>) {
         when (state) {
             is State.Success -> {
                 pagination = state.data.pagination
@@ -76,9 +77,13 @@ class BrowseViewModel @Inject constructor(
         }
     }
 
-    fun goToSeriesView() {
+    fun goToSeriesView(seriesId: Int) {
+        loadSeriesInfo(seriesId)
+    }
+
+    private fun loadSeriesInfo(seriesId: Int) {
         viewModelScope.launch {
-            browseRepository.getSeriesInfo(0)
+            browseRepository.getSeriesInfo(seriesId)
                 .collect(this@BrowseViewModel::collectSeriesInfo)
 
             _loading.value = false

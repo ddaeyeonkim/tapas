@@ -22,13 +22,13 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
     private val viewModel: BrowseViewModel by viewModels()
 
     private val browseAdapter = SeriesAdapter {
-        viewModel.goToSeriesView()
+        viewModel.goToSeriesView(it)
     }
 
     private val scrollListener: EndlessRecyclerViewScrollListener by lazy {
         object : EndlessRecyclerViewScrollListener(binding.rvBrowse.layoutManager!!) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                viewModel.getBrowseList(true)
+                viewModel.loadBrowse(true)
             }
         }
     }
@@ -40,7 +40,7 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
         initView()
         observeViewModel()
 
-        viewModel.getBrowseList()
+        viewModel.loadBrowse()
     }
 
     private fun initView() {
@@ -48,7 +48,7 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
         binding.rvBrowse.addOnScrollListener(scrollListener)
 
         binding.srlBrowse.setOnRefreshListener {
-            viewModel.getBrowseList()
+            viewModel.loadBrowse()
             scrollListener.resetState()
             binding.srlBrowse.isRefreshing = false
         }
