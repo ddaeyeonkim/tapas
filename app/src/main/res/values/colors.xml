@@ -12,4 +12,5 @@
 
     <color name="grey300">#e0e0e0</color>
     <color name="grey500">#9E9E9E</color>
+    <color name="read">#88000000</color>
 </resources>

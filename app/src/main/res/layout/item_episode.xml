@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?attr/selectableItemBackground">
+
+    <FrameLayout
+        android:id="@+id/fl_thumbnail"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_thumbnail"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="@null"
+            tools:src="@tools:sample/avatars" />
+
+        <View
+            android:id="@+id/iv_read"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/read"
+            android:visibility="invisible"
+            tools:visibility="visible" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/fl_thumbnail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/fl_thumbnail"
+        app:layout_constraintTop_toTopOf="@id/fl_thumbnail">
+
+        <TextView
+            android:id="@+id/tv_scene"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="@color/black"
+            tools:text="episode 60" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            tools:ignore="SpUsage"
+            tools:text="Prologue" />
+
+        <TextView
+            android:id="@+id/tv_created_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textColor="@color/grey500"
+            tools:text="Sep 01, 2021" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
