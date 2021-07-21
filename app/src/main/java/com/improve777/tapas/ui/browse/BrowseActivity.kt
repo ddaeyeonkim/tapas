@@ -11,6 +11,7 @@ import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.improve777.tapas.base.BaseActivity
 import com.improve777.tapas.databinding.ActivityBrowseBinding
+import com.improve777.tapas.ui.series.SeriesActivity
 import com.improve777.tapas.ui.utils.EndlessRecyclerViewScrollListener
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +20,9 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
 
     private val viewModel: BrowseViewModel by viewModels()
 
-    private val browseAdapter = BrowseAdapter()
+    private val browseAdapter = BrowseAdapter {
+        SeriesActivity.startActivity(this)
+    }
 
     private val scrollListener: EndlessRecyclerViewScrollListener by lazy {
         object : EndlessRecyclerViewScrollListener(binding.rvBrowse.layoutManager!!) {

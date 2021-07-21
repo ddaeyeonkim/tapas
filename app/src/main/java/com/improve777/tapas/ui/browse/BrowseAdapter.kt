@@ -10,10 +10,15 @@ import com.improve777.tapas.databinding.ItemBrowseBinding
 import com.improve777.tapas.domain.model.Browse
 import com.improve777.tapas.ui.utils.loadUrl
 
-class BrowseAdapter : BaseAdapter<Browse, ViewHolder>() {
+class BrowseAdapter(
+    private val onItemClick: () -> Unit,
+) : BaseAdapter<Browse, ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemBrowseBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding.root.setOnClickListener {
+            onItemClick()
+        }
         return ViewHolder(binding)
     }
 }
