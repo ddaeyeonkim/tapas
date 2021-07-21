@@ -12,7 +12,7 @@ class BrowseRepositoryImpl : BrowseRepository {
         return flow {
             emit(State.Loading)
 
-            delay(3000)
+            delay(300)
 
             val items = listOf(
                 Browse(id = 0, title = "Love Lesson", thumbnailUrl = "https://d30womf5coomej.cloudfront.net/sa/90/3887becb-a368-450f-b6c4-7b2efd5aeddf.jpg", genre = "Romance", likeCount = 1, isBookCover = false),
