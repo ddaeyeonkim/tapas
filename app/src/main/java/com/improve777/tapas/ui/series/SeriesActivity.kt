@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.google.android.material.appbar.AppBarLayout
+import com.improve777.tapas.R
 import com.improve777.tapas.base.BaseActivity
 import com.improve777.tapas.databinding.ActivitySeriesBinding
 import com.improve777.tapas.domain.model.SeriesInfo
@@ -69,7 +70,9 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
         }
 
         viewModel.episodeVoList.observe(this) {
-            episodeAdapter.submitList(it)
+            val episodeListWithTitle = it.toMutableList()
+            episodeListWithTitle.add(0, EpisodeVo.SectionName(getString(R.string.episode_count_format, it.size)))
+            episodeAdapter.submitList(episodeListWithTitle)
         }
     }
 
