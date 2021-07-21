@@ -47,6 +47,10 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
             binding.rvBrowse.isVisible = false
             binding.layoutError.content.isVisible = true
         }
+
+        viewModel.loading.observe(this) {
+            binding.pbBrowse.isVisible = it
+        }
     }
 
     private fun clearStatusBarColor() {

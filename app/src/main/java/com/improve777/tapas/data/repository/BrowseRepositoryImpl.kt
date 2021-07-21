@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.flow
 class BrowseRepositoryImpl : BrowseRepository {
     override fun getBrowseList(page: Int): Flow<State<List<Browse>>> {
         return flow {
+            emit(State.Loading)
+
             delay(3000)
 
             val items = listOf(
