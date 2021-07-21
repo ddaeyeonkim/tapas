@@ -3,6 +3,7 @@ package com.improve777.tapas
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
@@ -13,10 +14,28 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding::inflate) {
 
+    private val viewModel: BrowseViewModel by viewModels()
+
+    private val browseAdapter = BrowseAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         clearStatusBarColor()
         fetchHeaderWindowInsets()
+        initView()
+        observeViewModel()
+
+        viewModel.getBrowseList(1)
+    }
+
+    private fun initView() {
+        binding.rvBrowse.adapter = browseAdapter
+    }
+
+    private fun observeViewModel() {
+        viewModel.browseList.observe(this) {
+            browseAdapter.submitList(it)
+        }
     }
 
     private fun clearStatusBarColor() {
