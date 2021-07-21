@@ -24,6 +24,10 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
 
     private val viewModel: SeriesViewModel by viewModels()
 
+    private val episodeAdapter: EpisodeAdapter by lazy {
+        EpisodeAdapter()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         clearStatusBarColor()
@@ -41,6 +45,8 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
             binding.layoutHeader.clRoot.alpha = percent
             binding.tvToolbarTitle.visibility = if (percent <= 0.2f) View.VISIBLE else View.INVISIBLE
         })
+
+        binding.rvSeries.adapter = episodeAdapter
     }
 
     private fun observeViewModel() {
@@ -56,11 +62,16 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
                 tvCreator.text = it.creator
             }
         }
+
+        viewModel.episodeVoList.observe(this) {
+            episodeAdapter.submitList(it)
+        }
     }
 
     private fun initData() {
         val seriesInfo = intent.getParcelableExtra<SeriesInfo>(EXTRA_SERIES_INFO) ?: return
         viewModel.setData(seriesInfo)
+        viewModel.loadEpisodeList()
     }
 
     private fun clearStatusBarColor() {

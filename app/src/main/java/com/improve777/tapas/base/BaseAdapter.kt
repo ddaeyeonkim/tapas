@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 abstract class BaseAdapter<T, VH : BaseViewHolder<T>> : RecyclerView.Adapter<VH>() {
 
-    private val items = mutableListOf<T>()
+    protected val items = mutableListOf<T>()
 
     fun submitList(items: List<T>) {
         this.items.clear()
