@@ -58,4 +58,7 @@ dependencies {
 
     implementation(Deps.Hilt.android)
     kapt(Deps.Hilt.compiler)
+
+    implementation(Deps.Glide.core)
+    kapt(Deps.Glide.compiler)
 }

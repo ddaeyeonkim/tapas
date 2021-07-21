@@ -36,4 +36,10 @@ object Deps {
         val androidJUnit = "androidx.test.ext:junit:1.1.3"
         val espresso = "androidx.test.espresso:espresso-core:3.4.0"
     }
+
+    object Glide {
+        private val version = "4.11.0"
+        val core = "com.github.bumptech.glide:glide:$version"
+        val compiler = "com.github.bumptech.glide:compiler:$version"
+    }
 }
