@@ -5,22 +5,32 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import androidx.activity.viewModels
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.google.android.material.appbar.AppBarLayout
 import com.improve777.tapas.base.BaseActivity
 import com.improve777.tapas.databinding.ActivitySeriesBinding
+import com.improve777.tapas.domain.model.SeriesInfo
+import com.improve777.tapas.ui.utils.loadUrl
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.abs
 import kotlin.math.pow
 
+@AndroidEntryPoint
 class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding::inflate) {
+
+    private val viewModel: SeriesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         clearStatusBarColor()
         fetchHeaderWindowInsets()
         initView()
+        observeViewModel()
+        initData()
     }
 
     private fun initView() {
@@ -31,6 +41,26 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
             binding.layoutHeader.clRoot.alpha = percent
             binding.tvToolbarTitle.visibility = if (percent <= 0.2f) View.VISIBLE else View.INVISIBLE
         })
+    }
+
+    private fun observeViewModel() {
+        viewModel.seriesInfo.observe(this) {
+            binding.tvToolbarTitle.text = it.title
+            with(binding.layoutHeader) {
+                val layoutParams = ivThumbnail.layoutParams as? ConstraintLayout.LayoutParams
+                layoutParams?.dimensionRatio = if (it.isBookCover) "1:1.5" else "1:1"
+                ivThumbnail.layoutParams = layoutParams
+
+                ivThumbnail.loadUrl(it.thumbnailUrl)
+                tvTitle.text = it.title
+                tvCreator.text = it.creator
+            }
+        }
+    }
+
+    private fun initData() {
+        val seriesInfo = intent.getParcelableExtra<SeriesInfo>(EXTRA_SERIES_INFO) ?: return
+        viewModel.setData(seriesInfo)
     }
 
     private fun clearStatusBarColor() {
@@ -49,8 +79,12 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
     }
 
     companion object {
-        fun startActivity(context: Context) {
-            context.startActivity(Intent(context, SeriesActivity::class.java))
+        private const val EXTRA_SERIES_INFO = "EXTRA_SERIES_INFO"
+
+        fun startActivity(context: Context, seriesInfo: SeriesInfo) {
+            context.startActivity(Intent(context, SeriesActivity::class.java).apply {
+                putExtra(EXTRA_SERIES_INFO, seriesInfo)
+            })
         }
     }
 }
