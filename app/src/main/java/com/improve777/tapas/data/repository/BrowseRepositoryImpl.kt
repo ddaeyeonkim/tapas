@@ -2,6 +2,7 @@ package com.improve777.tapas.data.repository
 
 import com.improve777.tapas.State
 import com.improve777.tapas.domain.model.Browse
+import com.improve777.tapas.domain.model.Episode
 import com.improve777.tapas.domain.model.SeriesInfo
 import com.improve777.tapas.domain.repository.BrowseRepository
 import kotlinx.coroutines.delay
@@ -47,6 +48,32 @@ class BrowseRepositoryImpl : BrowseRepository {
             )
 
             emit(State.Success(seriesInfo))
+        }
+    }
+
+    override fun getEpisodeList(seriesId: Int): Flow<State<List<Episode>>> {
+        return flow {
+            emit(State.Loading)
+
+            delay(300)
+
+            val items = listOf(
+                Episode(id = 1, title = "Prologue", scene = 21, createdDate = "2021-02-16T18:18:13Z", thumbnailUrl = "https://d30womf5coomej.cloudfront.net/sa/8b/83b3c890-a21f-45ac-9366-bc382df56f9b.jpg", hadRead = true),
+                Episode(id = 0, title = "", scene = 0, createdDate = "", thumbnailUrl = "", hadRead = true),
+                Episode(id = 0, title = "", scene = 0, createdDate = "", thumbnailUrl = "", hadRead = true),
+                Episode(id = 0, title = "", scene = 0, createdDate = "", thumbnailUrl = "", hadRead = true),
+                Episode(id = 0, title = "", scene = 0, createdDate = "", thumbnailUrl = "", hadRead = true),
+                Episode(id = 0, title = "", scene = 0, createdDate = "", thumbnailUrl = "", hadRead = true),
+                Episode(id = 0, title = "", scene = 0, createdDate = "", thumbnailUrl = "", hadRead = true),
+                Episode(id = 0, title = "", scene = 0, createdDate = "", thumbnailUrl = "", hadRead = true),
+                Episode(id = 0, title = "", scene = 0, createdDate = "", thumbnailUrl = "", hadRead = true),
+                Episode(id = 0, title = "", scene = 0, createdDate = "", thumbnailUrl = "", hadRead = true),
+                Episode(id = 0, title = "", scene = 0, createdDate = "", thumbnailUrl = "", hadRead = true),
+                Episode(id = 0, title = "", scene = 0, createdDate = "", thumbnailUrl = "", hadRead = true),
+                Episode(id = 0, title = "", scene = 0, createdDate = "", thumbnailUrl = "", hadRead = true),
+            )
+
+            emit(State.Success(items))
         }
     }
 }
