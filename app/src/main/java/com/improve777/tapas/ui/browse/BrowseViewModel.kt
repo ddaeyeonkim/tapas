@@ -1,8 +1,9 @@
-package com.improve777.tapas
+package com.improve777.tapas.ui.browse
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.improve777.tapas.State
 import com.improve777.tapas.base.BaseViewModel
 import com.improve777.tapas.domain.model.Browse
 import com.improve777.tapas.domain.repository.BrowseRepository

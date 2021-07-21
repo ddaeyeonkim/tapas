@@ -1,4 +1,4 @@
-package com.improve777.tapas
+package com.improve777.tapas.ui.browse
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
