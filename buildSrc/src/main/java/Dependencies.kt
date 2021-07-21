@@ -15,6 +15,10 @@ object Deps {
         val appcompat = "androidx.appcompat:appcompat:1.3.0"
         val material = "com.google.android.material:material:1.4.0"
         val contraintlayout = "androidx.constraintlayout:constraintlayout:2.0.4"
+        // https://mvnrepository.com/artifact/androidx.activity/activity-ktx
+        val activityKtx = "androidx.activity:activity-ktx:1.3.0-rc02"
+        // https://mvnrepository.com/artifact/androidx.lifecycle/lifecycle-viewmodel-ktx
+        val lifecycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     }
 
     object Hilt {

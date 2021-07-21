@@ -48,6 +48,8 @@ dependencies {
     implementation(Deps.Android.appcompat)
     implementation(Deps.Android.material)
     implementation(Deps.Android.contraintlayout)
+    implementation(Deps.Android.activityKtx)
+    implementation(Deps.Android.lifecycleViewModelKtx)
 
     testImplementation(Deps.Test.junit)
     androidTestImplementation(Deps.Test.androidJUnit)
