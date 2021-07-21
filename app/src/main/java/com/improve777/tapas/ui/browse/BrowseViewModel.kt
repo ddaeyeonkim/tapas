@@ -25,12 +25,6 @@ class BrowseViewModel @Inject constructor(
     private val _seriesList = MutableLiveData<List<Series>>()
     val seriesList: LiveData<List<Series>> = _seriesList
 
-    private val _error = MutableLiveData<Error>()
-    val error: LiveData<Error> = _error
-
-    private val _loading = MutableLiveData<Boolean>()
-    val loading: LiveData<Boolean> = _loading
-
     private val _goToSeriesEvent = MutableLiveData<Event<SeriesInfo>>()
     val goToSeriesEvent: LiveData<Event<SeriesInfo>> = _goToSeriesEvent
 
@@ -63,13 +57,11 @@ class BrowseViewModel @Inject constructor(
                 _seriesList.value = currentList + state.data.seriesList
 
                 if (_seriesList.value.isNullOrEmpty()) {
-                    _error.value = Error.Empty
+                    _error.value = State.Error.EMPTY
                 }
             }
             is State.Error -> {
-                if (_seriesList.value.isNullOrEmpty()) {
-                    _error.value = Error.Empty
-                }
+                _error.value = state
             }
             State.Loading -> {
                 _loading.value = true
@@ -96,7 +88,7 @@ class BrowseViewModel @Inject constructor(
                 _goToSeriesEvent.value = Event(state.data)
             }
             is State.Error -> {
-                // TODO: 2021/07/21 에러처리
+                _error.value = state
             }
             State.Loading -> {
                 _loading.value = true

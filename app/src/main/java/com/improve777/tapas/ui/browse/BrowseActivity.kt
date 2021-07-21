@@ -1,16 +1,20 @@
 package com.improve777.tapas.ui.browse
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
+import com.improve777.tapas.State
 import com.improve777.tapas.base.BaseActivity
 import com.improve777.tapas.databinding.ActivityBrowseBinding
+import com.improve777.tapas.domain.model.Error
 import com.improve777.tapas.ui.series.SeriesActivity
 import com.improve777.tapas.ui.utils.EndlessRecyclerViewScrollListener
 import com.improve777.tapas.ui.utils.EventObserver
@@ -60,8 +64,26 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
         }
 
         viewModel.error.observe(this) {
-            binding.rvBrowse.isVisible = false
-            binding.layoutError.content.isVisible = true
+            Log.w("error", it.error)
+
+            when (it.status) {
+                State.Error.STATUS_JSON_ERROR, State.Error.STATUS_EMPTY -> {
+                    binding.rvBrowse.isVisible = false
+                    binding.layoutError.content.isVisible = true
+
+                    binding.layoutError.ivError.setImageDrawable(ContextCompat.getDrawable(this,
+                        Error.Empty.iconRes))
+                    binding.layoutError.tvErrorMessage.text = getString(Error.Empty.message)
+                }
+                else -> {
+                    binding.rvBrowse.isVisible = false
+                    binding.layoutError.content.isVisible = true
+
+                    binding.layoutError.ivError.setImageDrawable(ContextCompat.getDrawable(this,
+                        Error.Network.iconRes))
+                    binding.layoutError.tvErrorMessage.text = getString(Error.Network.message)
+                }
+            }
         }
 
         viewModel.loading.observe(this) {

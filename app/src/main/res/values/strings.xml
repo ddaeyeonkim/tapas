@@ -91,6 +91,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="the_data_is_not_available">The data is not available.</string>
+    <string name="check_your_network">Check your network.</string>
 
     <string name="scene_number_format">Episode %d</string>
     <string name="episode_count_format">%d Episodes</string>

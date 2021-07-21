@@ -15,8 +15,8 @@ suspend fun <T> mapResponseToState(
             State.Error(response.code(), response.message())
         }
     } catch (e: JsonSyntaxException) {
-        State.Error(-1, "begin object", e)
+        State.Error(State.Error.STATUS_JSON_ERROR, e.message ?: "json syntax error", e)
     } catch (e: Exception) {
-        State.Error(404, "network error", e)
+        State.Error(404, e.message ?: "network error", e)
     }
 }
