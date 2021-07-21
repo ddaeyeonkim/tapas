@@ -8,8 +8,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
+import androidx.recyclerview.widget.RecyclerView
 import com.improve777.tapas.base.BaseActivity
 import com.improve777.tapas.databinding.ActivityBrowseBinding
+import com.improve777.tapas.ui.utils.EndlessRecyclerViewScrollListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,6 +21,14 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
 
     private val browseAdapter = BrowseAdapter()
 
+    private val scrollListener: EndlessRecyclerViewScrollListener by lazy {
+        object : EndlessRecyclerViewScrollListener(binding.rvBrowse.layoutManager!!) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                viewModel.getBrowseList(true)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         clearStatusBarColor()
@@ -26,14 +36,16 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
         initView()
         observeViewModel()
 
-        viewModel.getBrowseList(1)
+        viewModel.getBrowseList()
     }
 
     private fun initView() {
         binding.rvBrowse.adapter = browseAdapter
+        binding.rvBrowse.addOnScrollListener(scrollListener)
 
         binding.srlBrowse.setOnRefreshListener {
-            viewModel.getBrowseList(1)
+            viewModel.getBrowseList()
+            scrollListener.resetState()
             binding.srlBrowse.isRefreshing = false
         }
     }

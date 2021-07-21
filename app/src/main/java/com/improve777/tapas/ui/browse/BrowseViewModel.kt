@@ -7,6 +7,7 @@ import com.improve777.tapas.State
 import com.improve777.tapas.base.BaseViewModel
 import com.improve777.tapas.domain.model.Browse
 import com.improve777.tapas.domain.model.Error
+import com.improve777.tapas.domain.model.Pagination
 import com.improve777.tapas.domain.repository.BrowseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -27,13 +28,19 @@ class BrowseViewModel @Inject constructor(
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
-    fun getBrowseList(page: Int) {
-        if (page == 1) {
+    private var pagination = Pagination(1, true)
+
+    fun getBrowseList(loadMore: Boolean = false) {
+        if (!pagination.hasNext) {
+            return
+        }
+
+        if (!loadMore) {
             _browseList.value = emptyList()
         }
 
         viewModelScope.launch {
-            browseRepository.getBrowseList(page)
+            browseRepository.getBrowseList(pagination.page)
                 .collect(this@BrowseViewModel::collectBrowseList)
 
             _loading.value = false
@@ -43,6 +50,8 @@ class BrowseViewModel @Inject constructor(
     private suspend fun collectBrowseList(state: State<List<Browse>>) {
         when (state) {
             is State.Success -> {
+                pagination = Pagination(pagination.page + 1, true)
+
                 val currentList = _browseList.value ?: emptyList()
                 _browseList.value = currentList + state.data
 

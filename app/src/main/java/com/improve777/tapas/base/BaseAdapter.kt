@@ -10,7 +10,7 @@ abstract class BaseAdapter<T, VH : BaseViewHolder<T>> : RecyclerView.Adapter<VH>
     fun submitList(items: List<T>) {
         this.items.clear()
         this.items.addAll(items)
-        notifyDataSetChanged()
+        notifyItemRangeInserted(this.items.size, items.size)
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
