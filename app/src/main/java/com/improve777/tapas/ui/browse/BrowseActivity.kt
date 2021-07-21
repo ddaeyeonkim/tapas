@@ -13,6 +13,7 @@ import com.improve777.tapas.base.BaseActivity
 import com.improve777.tapas.databinding.ActivityBrowseBinding
 import com.improve777.tapas.ui.series.SeriesActivity
 import com.improve777.tapas.ui.utils.EndlessRecyclerViewScrollListener
+import com.improve777.tapas.ui.utils.EventObserver
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,7 +22,7 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
     private val viewModel: BrowseViewModel by viewModels()
 
     private val browseAdapter = BrowseAdapter {
-        SeriesActivity.startActivity(this)
+        viewModel.goToSeriesView()
     }
 
     private val scrollListener: EndlessRecyclerViewScrollListener by lazy {
@@ -66,6 +67,10 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
         viewModel.loading.observe(this) {
             binding.pbBrowse.isVisible = it
         }
+
+        viewModel.goToSeriesEvent.observe(this, EventObserver { seriesInfo ->
+            SeriesActivity.startActivity(this, seriesInfo)
+        })
     }
 
     private fun clearStatusBarColor() {

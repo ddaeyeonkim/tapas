@@ -8,7 +8,9 @@ import com.improve777.tapas.base.BaseViewModel
 import com.improve777.tapas.domain.model.Browse
 import com.improve777.tapas.domain.model.Error
 import com.improve777.tapas.domain.model.Pagination
+import com.improve777.tapas.domain.model.SeriesInfo
 import com.improve777.tapas.domain.repository.BrowseRepository
+import com.improve777.tapas.ui.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.collect
@@ -27,6 +29,9 @@ class BrowseViewModel @Inject constructor(
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
+
+    private val _goToSeriesEvent = MutableLiveData<Event<SeriesInfo>>()
+    val goToSeriesEvent: LiveData<Event<SeriesInfo>> = _goToSeriesEvent
 
     private var pagination = Pagination(1, true)
 
@@ -63,6 +68,29 @@ class BrowseViewModel @Inject constructor(
                 if (_browseList.value.isNullOrEmpty()) {
                     _error.value = Error.Empty
                 }
+            }
+            State.Loading -> {
+                _loading.value = true
+            }
+        }
+    }
+
+    fun goToSeriesView() {
+        viewModelScope.launch {
+            browseRepository.getSeriesInfo(0)
+                .collect(this@BrowseViewModel::collectSeriesInfo)
+
+            _loading.value = false
+        }
+    }
+
+    private fun collectSeriesInfo(state: State<SeriesInfo>) {
+        when (state) {
+            is State.Success -> {
+                _goToSeriesEvent.value = Event(state.data)
+            }
+            is State.Error -> {
+                // TODO: 2021/07/21 에러처리
             }
             State.Loading -> {
                 _loading.value = true
