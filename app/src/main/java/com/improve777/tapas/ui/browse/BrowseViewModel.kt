@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.improve777.tapas.State
 import com.improve777.tapas.base.BaseViewModel
 import com.improve777.tapas.domain.model.Browse
-import com.improve777.tapas.domain.model.Error
 import com.improve777.tapas.domain.model.Pagination
 import com.improve777.tapas.domain.model.Series
 import com.improve777.tapas.domain.model.SeriesInfo
@@ -27,6 +26,9 @@ class BrowseViewModel @Inject constructor(
 
     private val _goToSeriesEvent = MutableLiveData<Event<SeriesInfo>>()
     val goToSeriesEvent: LiveData<Event<SeriesInfo>> = _goToSeriesEvent
+
+    private val _openRetrySeriesInfoEvent = MutableLiveData<Event<SeriesInfoError>>()
+    val openRetrySeriesInfoEvent: LiveData<Event<SeriesInfoError>> = _openRetrySeriesInfoEvent
 
     private var pagination = Pagination(1, true)
 
@@ -76,19 +78,20 @@ class BrowseViewModel @Inject constructor(
     private fun loadSeriesInfo(seriesId: Int) {
         viewModelScope.launch {
             browseRepository.getSeriesInfo(seriesId)
-                .collect(this@BrowseViewModel::collectSeriesInfo)
-
+                .collect {
+                    collectSeriesInfo(seriesId, it)
+                }
             _loading.value = false
         }
     }
 
-    private fun collectSeriesInfo(state: State<SeriesInfo>) {
+    private fun collectSeriesInfo(seriesId: Int, state: State<SeriesInfo>) {
         when (state) {
             is State.Success -> {
                 _goToSeriesEvent.value = Event(state.data)
             }
             is State.Error -> {
-                _error.value = state
+                _openRetrySeriesInfoEvent.value = Event(SeriesInfoError(seriesId))
             }
             State.Loading -> {
                 _loading.value = true

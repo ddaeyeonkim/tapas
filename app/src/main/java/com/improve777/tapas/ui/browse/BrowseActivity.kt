@@ -1,5 +1,6 @@
 package com.improve777.tapas.ui.browse
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
+import com.improve777.tapas.R
 import com.improve777.tapas.State
 import com.improve777.tapas.base.BaseActivity
 import com.improve777.tapas.databinding.ActivityBrowseBinding
@@ -54,6 +56,8 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
         binding.srlBrowse.setOnRefreshListener {
             viewModel.loadBrowse()
             scrollListener.resetState()
+            binding.rvBrowse.isVisible = true
+            binding.layoutError.content.isVisible = false
             binding.srlBrowse.isRefreshing = false
         }
     }
@@ -64,27 +68,42 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
         }
 
         viewModel.error.observe(this) {
-            Log.w("error", it.error)
+            Log.w("error", it.message)
 
             when (it.status) {
                 State.Error.STATUS_JSON_ERROR, State.Error.STATUS_EMPTY -> {
                     binding.rvBrowse.isVisible = false
                     binding.layoutError.content.isVisible = true
 
-                    binding.layoutError.ivError.setImageDrawable(ContextCompat.getDrawable(this,
-                        Error.Empty.iconRes))
+                    binding.layoutError.ivError.setImageDrawable(
+                        ContextCompat.getDrawable(this, Error.Empty.iconRes))
                     binding.layoutError.tvErrorMessage.text = getString(Error.Empty.message)
                 }
                 else -> {
                     binding.rvBrowse.isVisible = false
                     binding.layoutError.content.isVisible = true
 
-                    binding.layoutError.ivError.setImageDrawable(ContextCompat.getDrawable(this,
-                        Error.Network.iconRes))
+                    binding.layoutError.ivError.setImageDrawable(
+                        ContextCompat.getDrawable(this, Error.Network.iconRes))
                     binding.layoutError.tvErrorMessage.text = getString(Error.Network.message)
                 }
             }
         }
+
+        viewModel.openRetrySeriesInfoEvent.observe(this, EventObserver {
+            AlertDialog.Builder(this)
+                .setTitle(R.string.check_your_network)
+                .setMessage(R.string.please_try_again)
+                .setPositiveButton(getString(R.string.yes)) { dialog, _ ->
+                    dialog.dismiss()
+                    viewModel.goToSeriesView(it.seriesId)
+                }
+                .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .create()
+                .show()
+        })
 
         viewModel.loading.observe(this) {
             binding.pbBrowse.isVisible = it

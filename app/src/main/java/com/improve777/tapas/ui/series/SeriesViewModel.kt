@@ -36,6 +36,8 @@ class SeriesViewModel @Inject constructor(
         viewModelScope.launch {
             browseRepository.getEpisodeList(seriesId)
                 .collect(this@SeriesViewModel::collectEpisodeList)
+
+            _loading.value = false
         }
     }
 
@@ -49,10 +51,10 @@ class SeriesViewModel @Inject constructor(
                 }
             }
             is State.Error -> {
-                // todo
+                _error.value = state
             }
             State.Loading -> {
-                // todo
+                _loading.value = true
             }
         }
     }

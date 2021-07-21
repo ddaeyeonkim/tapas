@@ -3,17 +3,22 @@ package com.improve777.tapas.ui.series
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import com.google.android.material.appbar.AppBarLayout
 import com.improve777.tapas.R
+import com.improve777.tapas.State
 import com.improve777.tapas.base.BaseActivity
 import com.improve777.tapas.databinding.ActivitySeriesBinding
+import com.improve777.tapas.domain.model.Error
 import com.improve777.tapas.domain.model.SeriesInfo
 import com.improve777.tapas.ui.utils.loadUrl
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,6 +78,33 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
             val episodeListWithTitle = it.toMutableList()
             episodeListWithTitle.add(0, EpisodeVo.SectionName(getString(R.string.episode_count_format, it.size)))
             episodeAdapter.submitList(episodeListWithTitle)
+        }
+
+        viewModel.loading.observe(this) {
+            binding.pbSeries.isVisible = it
+        }
+
+        viewModel.error.observe(this) {
+            Log.w("error", it.message)
+
+            when (it.status) {
+                State.Error.STATUS_JSON_ERROR, State.Error.STATUS_EMPTY -> {
+                    binding.rvSeries.isVisible = false
+                    binding.layoutError.content.isVisible = true
+
+                    binding.layoutError.ivError.setImageDrawable(
+                        ContextCompat.getDrawable(this, Error.Empty.iconRes))
+                    binding.layoutError.tvErrorMessage.text = getString(Error.Empty.message)
+                }
+                else -> {
+                    binding.rvSeries.isVisible = false
+                    binding.layoutError.content.isVisible = true
+
+                    binding.layoutError.ivError.setImageDrawable(
+                        ContextCompat.getDrawable(this, Error.Network.iconRes))
+                    binding.layoutError.tvErrorMessage.text = getString(Error.Network.message)
+                }
+            }
         }
     }
 
