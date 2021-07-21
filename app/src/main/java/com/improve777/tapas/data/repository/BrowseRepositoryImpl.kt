@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class BrowseRepositoryImpl : BrowseRepository {
-    override fun getBrowseList(page: Int): Flow<State<Browse>> {
+    override fun getBrowse(page: Int): Flow<State<Browse>> {
         return flow {
             emit(State.Loading)
 
