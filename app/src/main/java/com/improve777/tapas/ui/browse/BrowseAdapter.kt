@@ -3,10 +3,12 @@ package com.improve777.tapas.ui.browse
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import com.improve777.tapas.base.BaseAdapter
 import com.improve777.tapas.base.BaseViewHolder
 import com.improve777.tapas.databinding.ItemBrowseBinding
 import com.improve777.tapas.domain.model.Browse
+import com.improve777.tapas.ui.utils.loadUrl
 
 class BrowseAdapter : BaseAdapter<Browse, ViewHolder>() {
 
@@ -22,7 +24,10 @@ class ViewHolder(private val binding: ItemBrowseBinding) : BaseViewHolder<Browse
         val layoutParams = binding.ivThumbnail.layoutParams as? ConstraintLayout.LayoutParams
         layoutParams?.dimensionRatio = if (item.isBookCover) "1:1.5" else "1:1"
         binding.ivThumbnail.layoutParams = layoutParams
-        // TODO: 2021/07/21 이미지 로드 추가
+        binding.ivThumbnail.loadUrl(item.thumbnailUrl)
+
+        binding.tvTitle.isVisible = !item.isBookCover && item.title.isNotBlank()
+        binding.tvTitle.text = item.title
 
         binding.tvGenre.text = item.genre
         binding.tvLikeCount.text = convertUnit(item.likeCount)

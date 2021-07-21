@@ -15,8 +15,8 @@ class BrowseRepositoryImpl : BrowseRepository {
             delay(3000)
 
             val items = listOf(
-                Browse(id = 0, title = "", thumbnailUrl = "", genre = "Romance", likeCount = 1, isBookCover = false),
-                Browse(id = 0, title = "", thumbnailUrl = "", genre = "", likeCount = 100, isBookCover = true),
+                Browse(id = 0, title = "Love Lesson", thumbnailUrl = "https://d30womf5coomej.cloudfront.net/sa/90/3887becb-a368-450f-b6c4-7b2efd5aeddf.jpg", genre = "Romance", likeCount = 1, isBookCover = false),
+                Browse(id = 0, title = "Love Lesson", thumbnailUrl = "https://d30womf5coomej.cloudfront.net/sa/96/85c6a6d3-3004-487e-88a0-c525d50e64db.jpg", genre = "", likeCount = 100, isBookCover = true),
                 Browse(id = 0, title = "", thumbnailUrl = "", genre = "", likeCount = 1000, isBookCover = false),
                 Browse(id = 0, title = "", thumbnailUrl = "", genre = "", likeCount = 1111, isBookCover = false),
                 Browse(id = 0, title = "", thumbnailUrl = "", genre = "", likeCount = 1800, isBookCover = false),
