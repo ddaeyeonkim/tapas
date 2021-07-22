@@ -17,6 +17,7 @@ import com.improve777.tapas.databinding.ActivitySeriesBinding
 import com.improve777.tapas.ui.models.Error
 import com.improve777.tapas.domain.model.SeriesInfo
 import com.improve777.tapas.ui.utils.addOnRangePercentChangedListener
+import com.improve777.tapas.ui.utils.fetchError
 import com.improve777.tapas.ui.utils.loadUrl
 import com.improve777.tapas.ui.utils.updateDimensionRatioByThumbnailType
 import dagger.hilt.android.AndroidEntryPoint

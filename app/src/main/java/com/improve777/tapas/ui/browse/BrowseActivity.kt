@@ -10,12 +10,12 @@ import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.RecyclerView
 import com.improve777.tapas.R
-import com.improve777.tapas.domain.model.State
 import com.improve777.tapas.base.BaseActivity
 import com.improve777.tapas.databinding.ActivityBrowseBinding
+import com.improve777.tapas.domain.model.State
 import com.improve777.tapas.ui.models.Error
 import com.improve777.tapas.ui.series.SeriesActivity
-import com.improve777.tapas.ui.series.fetchError
+import com.improve777.tapas.ui.utils.fetchError
 import com.improve777.tapas.ui.utils.EndlessRecyclerViewScrollListener
 import com.improve777.tapas.ui.utils.EventObserver
 import dagger.hilt.android.AndroidEntryPoint

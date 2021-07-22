@@ -1,23 +1,17 @@
 package com.improve777.tapas.base
 
 import android.view.View
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class BaseAdapter<T, VH : BaseViewHolder<T>> : RecyclerView.Adapter<VH>() {
-
-    protected val items = mutableListOf<T>()
-
-    fun submitList(items: List<T>) {
-        this.items.clear()
-        this.items.addAll(items)
-        notifyItemRangeInserted(this.items.size, items.size)
-    }
+abstract class BaseAdapter<T, VH : BaseViewHolder<T>>(
+    diffCallback: DiffUtil.ItemCallback<T>,
+) : ListAdapter<T, VH>(diffCallback) {
 
     override fun onBindViewHolder(holder: VH, position: Int) {
-        holder.bind(items[position])
+        holder.bind(getItem(position))
     }
-
-    override fun getItemCount(): Int = items.size
 }
 
 abstract class BaseViewHolder<T>(view: View) : RecyclerView.ViewHolder(view) {

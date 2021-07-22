@@ -1,4 +1,4 @@
-package com.improve777.tapas.ui.series
+package com.improve777.tapas.ui.utils
 
 import androidx.core.content.ContextCompat
 import com.improve777.tapas.databinding.LayoutErrorBinding
