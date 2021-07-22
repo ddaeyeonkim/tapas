@@ -8,7 +8,7 @@
     android:fitsSystemWindows="false"
     android:minHeight="?attr/actionBarSize"
     app:layoutDescription="@xml/scene_browse_toolbar"
-    app:layout_scrollFlags="scroll|enterAlways|snap|exitUntilCollapsed"
+    app:layout_scrollFlags="scroll|exitUntilCollapsed"
     tools:showPaths="true">
 
     <ImageView
