@@ -50,6 +50,7 @@ class BrowseActivity : BaseActivity<ActivityBrowseBinding>(ActivityBrowseBinding
     private fun initView() {
         binding.rvBrowse.adapter = browseAdapter
         binding.rvBrowse.addOnScrollListener(scrollListener)
+        binding.rvBrowse.addItemDecoration(SeriesItemDecoration())
 
         binding.srlBrowse.setOnRefreshListener {
             viewModel.loadBrowse()

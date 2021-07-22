@@ -14,8 +14,10 @@ import com.improve777.tapas.ui.models.SeriesVo
 import com.improve777.tapas.ui.utils.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @HiltViewModel
 class BrowseViewModel @Inject constructor(
@@ -30,9 +32,6 @@ class BrowseViewModel @Inject constructor(
 
     private val _openRetrySeriesInfoEvent = MutableLiveData<Event<SeriesInfoError>>()
     val openRetrySeriesInfoEvent: LiveData<Event<SeriesInfoError>> = _openRetrySeriesInfoEvent
-
-    private val _hasNextPage = MutableLiveData<Boolean>()
-    val hasNextPage: LiveData<Boolean> = _hasNextPage
 
     private var pagination = Pagination(1, true)
 
@@ -54,23 +53,25 @@ class BrowseViewModel @Inject constructor(
         }
     }
 
-    private fun collectBrowseList(state: State<Browse>) {
+    private suspend fun collectBrowseList(state: State<Browse>) {
         when (state) {
             is State.Success -> {
                 pagination = state.data.pagination
-                _hasNextPage.value = pagination.hasNext
 
-                val seriesVoList: MutableList<SeriesVo> = state.data.seriesList
-                    .mapIndexed { index, series -> series.toVo(index) }
-                    .toMutableList()
+                val currentList = withContext(Dispatchers.Default) {
+                    val seriesVoList: MutableList<SeriesVo> = state.data.seriesList
+                        .mapIndexed { index, series -> series.toVo(index) }
+                        .toMutableList()
 
-                if (pagination.hasNext) {
-                    seriesVoList.add(SeriesVo.Progress)
+                    if (pagination.hasNext) {
+                        seriesVoList.add(SeriesVo.Progress)
+                    }
+
+                    val beforeList: List<SeriesVo> =
+                        (_seriesList.value ?: emptyList()).filterIsInstance<SeriesVo.Series>()
+                    beforeList + seriesVoList
                 }
 
-                val beforeList: List<SeriesVo> =
-                    (_seriesList.value ?: emptyList()).filterIsInstance<SeriesVo.Series>()
-                val currentList: List<SeriesVo> = beforeList + seriesVoList
                 _seriesList.value = currentList
 
                 if (_seriesList.value.isNullOrEmpty()) {
