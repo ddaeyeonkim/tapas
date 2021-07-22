@@ -33,5 +33,5 @@ data class EpisodeResponse(
     @SerializedName("view_cnt")
     val viewCnt: Int?, // 88005
     @SerializedName("scheduled_date")
-    val scheduledDate: String? // null
+    val scheduledDate: String?, // null
 )

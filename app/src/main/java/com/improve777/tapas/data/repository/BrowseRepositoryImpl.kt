@@ -1,6 +1,5 @@
 package com.improve777.tapas.data.repository
 
-import com.improve777.tapas.domain.model.State
 import com.improve777.tapas.data.mapResponseToState
 import com.improve777.tapas.data.remote.api.SeriesApi
 import com.improve777.tapas.data.remote.mapper.toDomain
@@ -10,6 +9,7 @@ import com.improve777.tapas.data.remote.model.SeriesInfoResponse
 import com.improve777.tapas.domain.model.Browse
 import com.improve777.tapas.domain.model.Episode
 import com.improve777.tapas.domain.model.SeriesInfo
+import com.improve777.tapas.domain.model.State
 import com.improve777.tapas.domain.repository.BrowseRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

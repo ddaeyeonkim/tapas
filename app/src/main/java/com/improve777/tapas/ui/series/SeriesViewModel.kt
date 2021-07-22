@@ -3,10 +3,10 @@ package com.improve777.tapas.ui.series
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.improve777.tapas.domain.model.State
 import com.improve777.tapas.base.BaseViewModel
 import com.improve777.tapas.domain.model.Episode
 import com.improve777.tapas.domain.model.SeriesInfo
+import com.improve777.tapas.domain.model.State
 import com.improve777.tapas.domain.repository.BrowseRepository
 import com.improve777.tapas.ui.mapper.toVo
 import com.improve777.tapas.ui.models.EpisodeVo

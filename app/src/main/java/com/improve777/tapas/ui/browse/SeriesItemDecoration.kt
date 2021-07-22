@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.improve777.tapas.ui.utils.DP
 
-class SeriesItemDecoration: RecyclerView.ItemDecoration() {
+class SeriesItemDecoration : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
         view: View,

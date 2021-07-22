@@ -6,7 +6,7 @@ import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.RecyclerView
 import com.improve777.tapas.ui.utils.DP
 
-class EpisodeItemDecoration: RecyclerView.ItemDecoration() {
+class EpisodeItemDecoration : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,
         view: View,
@@ -19,16 +19,25 @@ class EpisodeItemDecoration: RecyclerView.ItemDecoration() {
         val innerPadding = 8.DP
 
         if (position == 0) {
-            view.updatePadding(left = outerPadding, top = outerPadding, right = outerPadding, bottom = innerPadding)
+            view.updatePadding(left = outerPadding,
+                top = outerPadding,
+                right = outerPadding,
+                bottom = innerPadding)
             return
         }
 
         val isLastItem = position == (parent.adapter?.itemCount ?: 0) - 1
         if (isLastItem) {
-            view.updatePadding(left = outerPadding, top = innerPadding, right = outerPadding, bottom = outerPadding)
+            view.updatePadding(left = outerPadding,
+                top = innerPadding,
+                right = outerPadding,
+                bottom = outerPadding)
             return
         }
 
-        view.updatePadding(left = outerPadding, top = innerPadding, right = outerPadding, bottom = innerPadding)
+        view.updatePadding(left = outerPadding,
+            top = innerPadding,
+            right = outerPadding,
+            bottom = innerPadding)
     }
 }

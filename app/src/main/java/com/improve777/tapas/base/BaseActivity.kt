@@ -7,7 +7,9 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 
-open class BaseActivity<B : ViewBinding>(private val inflate: (LayoutInflater) -> B) : AppCompatActivity() {
+open class BaseActivity<B : ViewBinding>(
+    private val inflate: (LayoutInflater) -> B
+) : AppCompatActivity() {
 
     private var _binding: B? = null
 

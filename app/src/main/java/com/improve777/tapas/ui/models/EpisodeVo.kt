@@ -9,5 +9,6 @@ sealed class EpisodeVo {
         val thumbnailUrl: String,
         val hadRead: Boolean,
     ) : EpisodeVo()
+
     data class SectionName(val name: String) : EpisodeVo()
 }

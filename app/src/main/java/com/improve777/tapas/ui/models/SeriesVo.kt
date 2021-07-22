@@ -10,5 +10,6 @@ sealed class SeriesVo {
         val likeCount: Int,
         val isBookCover: Boolean,
     ) : SeriesVo()
+
     object Progress : SeriesVo()
 }

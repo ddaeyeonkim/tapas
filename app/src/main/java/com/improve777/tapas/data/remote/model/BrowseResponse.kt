@@ -7,14 +7,14 @@ data class BrowseResponse(
     @SerializedName("pagination")
     val pagination: PaginationResponse?,
     @SerializedName("series")
-    val series: List<SeriesResponse>
+    val series: List<SeriesResponse>,
 )
 
 data class PaginationResponse(
     @SerializedName("page")
     val page: Int?, // 2
     @SerializedName("has_next")
-    val hasNext: Boolean? // true
+    val hasNext: Boolean?, // true
 )
 
 data class SeriesResponse(
@@ -63,7 +63,7 @@ data class SeriesResponse(
     @SerializedName("genre")
     val genre: GenreResponse?,
     @SerializedName("rect_banner_url")
-    val rectBannerUrl: String? // null
+    val rectBannerUrl: String?, // null
 )
 
 data class CreatorResponse(
@@ -76,6 +76,6 @@ data class CreatorResponse(
     @SerializedName("profile_pic_url")
     val profilePicUrl: String?, // https://d30womf5coomej.cloudfront.net/ua/8a/93283837-bd00-4cdb-902a-c29cb9583b89.png
     @SerializedName("joined_creator_tip")
-    val joinedCreatorTip: Boolean? // false
+    val joinedCreatorTip: Boolean?, // false
 )
 

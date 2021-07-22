@@ -1,9 +1,9 @@
 package com.improve777.tapas.domain.repository
 
-import com.improve777.tapas.domain.model.State
 import com.improve777.tapas.domain.model.Browse
 import com.improve777.tapas.domain.model.Episode
 import com.improve777.tapas.domain.model.SeriesInfo
+import com.improve777.tapas.domain.model.State
 import kotlinx.coroutines.flow.Flow
 
 interface BrowseRepository {

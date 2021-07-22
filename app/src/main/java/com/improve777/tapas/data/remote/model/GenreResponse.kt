@@ -10,5 +10,5 @@ data class GenreResponse(
     @SerializedName("abbr")
     val abbr: String?, // Romance
     @SerializedName("books")
-    val books: Boolean? // false
+    val books: Boolean?, // false
 )
