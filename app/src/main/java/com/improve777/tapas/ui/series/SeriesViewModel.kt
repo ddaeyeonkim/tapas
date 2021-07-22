@@ -8,6 +8,8 @@ import com.improve777.tapas.base.BaseViewModel
 import com.improve777.tapas.domain.model.Episode
 import com.improve777.tapas.domain.model.SeriesInfo
 import com.improve777.tapas.domain.repository.BrowseRepository
+import com.improve777.tapas.ui.mapper.toVo
+import com.improve777.tapas.ui.models.EpisodeVo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -45,9 +47,7 @@ class SeriesViewModel @Inject constructor(
         when (state) {
             is State.Success -> {
                 _episodeVoList.value = withContext(Dispatchers.Default) {
-                    state.data.map {
-                        EpisodeVo.Item(it)
-                    }    
+                    state.data.map(Episode::toVo)
                 }
             }
             is State.Error -> {

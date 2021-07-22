@@ -16,6 +16,7 @@ import com.improve777.tapas.base.BaseActivity
 import com.improve777.tapas.databinding.ActivitySeriesBinding
 import com.improve777.tapas.ui.models.Error
 import com.improve777.tapas.domain.model.SeriesInfo
+import com.improve777.tapas.ui.models.EpisodeVo
 import com.improve777.tapas.ui.utils.addOnRangePercentChangedListener
 import com.improve777.tapas.ui.utils.fetchError
 import com.improve777.tapas.ui.utils.loadUrl

@@ -9,6 +9,7 @@ import com.improve777.tapas.base.BaseAdapter
 import com.improve777.tapas.base.BaseViewHolder
 import com.improve777.tapas.databinding.ItemEpisodeBinding
 import com.improve777.tapas.databinding.ItemSectionNameBinding
+import com.improve777.tapas.ui.models.EpisodeVo
 import com.improve777.tapas.ui.utils.loadUrl
 
 class EpisodeAdapter : BaseAdapter<EpisodeVo, BaseViewHolder<EpisodeVo>>(DIFF_CALLBACK) {
@@ -28,7 +29,7 @@ class EpisodeAdapter : BaseAdapter<EpisodeVo, BaseViewHolder<EpisodeVo>>(DIFF_CA
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is EpisodeVo.Item -> R.layout.item_episode
+            is EpisodeVo.Episode -> R.layout.item_episode
             is EpisodeVo.SectionName -> R.layout.item_section_name
         }
     }
@@ -37,7 +38,7 @@ class EpisodeAdapter : BaseAdapter<EpisodeVo, BaseViewHolder<EpisodeVo>>(DIFF_CA
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<EpisodeVo>() {
             override fun areItemsTheSame(oldItem: EpisodeVo, newItem: EpisodeVo): Boolean {
                 return when {
-                    oldItem is EpisodeVo.Item && newItem is EpisodeVo.Item -> oldItem.episode.id == newItem.episode.id
+                    oldItem is EpisodeVo.Episode && newItem is EpisodeVo.Episode -> oldItem.id == newItem.id
                     oldItem is EpisodeVo.SectionName && newItem is EpisodeVo.SectionName -> true
                     else -> false
                 }
@@ -51,9 +52,8 @@ class EpisodeAdapter : BaseAdapter<EpisodeVo, BaseViewHolder<EpisodeVo>>(DIFF_CA
 }
 
 class EpisodeViewHolder(private val binding: ItemEpisodeBinding) :
-    BaseViewHolder<EpisodeVo.Item>(binding.root) {
-    override fun bind(item: EpisodeVo.Item) {
-        val episode = item.episode
+    BaseViewHolder<EpisodeVo.Episode>(binding.root) {
+    override fun bind(episode: EpisodeVo.Episode) {
         binding.tvScene.text =
             binding.tvScene.context.getString(R.string.scene_number_format, episode.scene)
         binding.tvTitle.text = episode.title
