@@ -38,6 +38,7 @@ fun SeriesInfoResponse.toDomain() = SeriesInfo(
         "${creator.displayName}${if (acc.isNotBlank()) ", $acc" else acc}"
     } ?: "",
     isBookCover = bookCoverUrl != null,
+    rgbHex = rgbHex ?: "",
 )
 
 fun EpisodeResponse.toDomain() = Episode(

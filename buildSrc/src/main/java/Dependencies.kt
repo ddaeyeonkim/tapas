@@ -21,6 +21,8 @@ object Deps {
         val lifecycleViewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
         // https://mvnrepository.com/artifact/androidx.swiperefreshlayout/swiperefreshlayout
         val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+        // https://mvnrepository.com/artifact/androidx.palette/palette
+        val palette = "androidx.palette:palette:1.0.0"
 
     }
 

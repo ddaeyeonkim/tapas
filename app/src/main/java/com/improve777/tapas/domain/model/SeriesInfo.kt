@@ -10,4 +10,7 @@ data class SeriesInfo(
     val thumbnailUrl: String,
     val creator: String,
     val isBookCover: Boolean,
+    val rgbHex: String,
+    val titleColor: Int? = null,
+    val bgColor: Int? = null,
 ) : Parcelable

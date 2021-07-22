@@ -52,6 +52,7 @@ dependencies {
     implementation(Deps.Android.activityKtx)
     implementation(Deps.Android.lifecycleViewModelKtx)
     implementation(Deps.Android.swiperefreshlayout)
+    implementation(Deps.Android.palette)
 
     testImplementation(Deps.Test.junit)
     androidTestImplementation(Deps.Test.androidJUnit)

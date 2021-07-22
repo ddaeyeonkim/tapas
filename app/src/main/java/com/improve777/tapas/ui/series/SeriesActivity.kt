@@ -2,6 +2,8 @@ package com.improve777.tapas.ui.series
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,12 +13,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import com.improve777.tapas.R
-import com.improve777.tapas.domain.model.State
 import com.improve777.tapas.base.BaseActivity
 import com.improve777.tapas.databinding.ActivitySeriesBinding
-import com.improve777.tapas.ui.models.Error
 import com.improve777.tapas.domain.model.SeriesInfo
+import com.improve777.tapas.domain.model.State
 import com.improve777.tapas.ui.models.EpisodeVo
+import com.improve777.tapas.ui.models.Error
 import com.improve777.tapas.ui.utils.addOnRangePercentChangedListener
 import com.improve777.tapas.ui.utils.fetchError
 import com.improve777.tapas.ui.utils.loadUrl
@@ -67,6 +69,21 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
                 ivThumbnail.loadUrl(it.thumbnailUrl)
                 tvTitle.text = it.title
                 tvCreator.text = it.creator
+
+                if (it.bgColor != null) {
+                    binding.ablSeries.setBackgroundColor(it.bgColor)
+                } else {
+                    if (it.rgbHex.isNotBlank()) {
+                        binding.ablSeries.setBackgroundColor(Color.parseColor(it.rgbHex))
+                    }
+                }
+
+                if (it.titleColor != null) {
+                    binding.ivBack.imageTintList = ColorStateList.valueOf(it.titleColor)
+                    binding.tvToolbarTitle.setTextColor(it.titleColor)
+                    tvCreator.setTextColor(it.titleColor)
+                    tvTitle.setTextColor(it.titleColor)
+                }
             }
         }
 
