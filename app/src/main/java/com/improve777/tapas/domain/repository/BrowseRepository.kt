@@ -1,6 +1,6 @@
 package com.improve777.tapas.domain.repository
 
-import com.improve777.tapas.State
+import com.improve777.tapas.domain.model.State
 import com.improve777.tapas.domain.model.Browse
 import com.improve777.tapas.domain.model.Episode
 import com.improve777.tapas.domain.model.SeriesInfo

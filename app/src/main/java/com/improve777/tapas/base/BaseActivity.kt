@@ -2,6 +2,8 @@ package com.improve777.tapas.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 
@@ -21,5 +23,12 @@ open class BaseActivity<B : ViewBinding>(private val inflate: (LayoutInflater) -
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
+    }
+
+    protected fun clearStatusBarColor() {
+        window.apply {
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        }
     }
 }

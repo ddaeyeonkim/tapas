@@ -1,4 +1,4 @@
-package com.improve777.tapas.domain.model
+package com.improve777.tapas.ui.models
 
 import com.improve777.tapas.R
 

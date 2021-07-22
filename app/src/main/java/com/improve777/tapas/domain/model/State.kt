@@ -1,4 +1,4 @@
-package com.improve777.tapas
+package com.improve777.tapas.domain.model
 
 sealed class State<out T> {
     data class Success<T>(val data: T) : State<T>()

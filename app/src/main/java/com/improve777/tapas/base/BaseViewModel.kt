@@ -3,7 +3,7 @@ package com.improve777.tapas.base
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.improve777.tapas.State
+import com.improve777.tapas.domain.model.State
 
 open class BaseViewModel : ViewModel() {
 

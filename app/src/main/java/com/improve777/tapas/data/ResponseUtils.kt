@@ -1,7 +1,7 @@
 package com.improve777.tapas.data
 
 import com.google.gson.JsonSyntaxException
-import com.improve777.tapas.State
+import com.improve777.tapas.domain.model.State
 import retrofit2.Response
 
 suspend fun <T> mapResponseToState(

@@ -1,6 +1,6 @@
 package com.improve777.tapas.data.repository
 
-import com.improve777.tapas.State
+import com.improve777.tapas.domain.model.State
 import com.improve777.tapas.data.mapResponseToState
 import com.improve777.tapas.data.remote.api.SeriesApi
 import com.improve777.tapas.data.remote.mapper.toDomain

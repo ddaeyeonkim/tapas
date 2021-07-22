@@ -5,24 +5,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import androidx.activity.viewModels
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
-import com.google.android.material.appbar.AppBarLayout
 import com.improve777.tapas.R
-import com.improve777.tapas.State
+import com.improve777.tapas.domain.model.State
 import com.improve777.tapas.base.BaseActivity
 import com.improve777.tapas.databinding.ActivitySeriesBinding
-import com.improve777.tapas.domain.model.Error
+import com.improve777.tapas.ui.models.Error
 import com.improve777.tapas.domain.model.SeriesInfo
+import com.improve777.tapas.ui.utils.addOnRangePercentChangedListener
 import com.improve777.tapas.ui.utils.loadUrl
+import com.improve777.tapas.ui.utils.updateDimensionRatioByThumbnailType
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.abs
 import kotlin.math.pow
 
 @AndroidEntryPoint
@@ -44,13 +41,13 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
     }
 
     private fun initView() {
-        binding.ablSeries.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-            val totalScrollRange = binding.ablSeries.totalScrollRange
-            val scrolledRange = abs(verticalOffset + totalScrollRange)
-            val percent = (scrolledRange / totalScrollRange.toFloat()).pow(1.2f)
+        binding.ablSeries.addOnRangePercentChangedListener { rangePercent ->
+            val percent = rangePercent.pow(1.2f)
             binding.layoutHeader.clRoot.alpha = percent
-            binding.tvToolbarTitle.visibility = if (percent <= 0.2f) View.VISIBLE else View.INVISIBLE
-        })
+            binding.tvToolbarTitle.visibility =
+                if (percent <= 0.2f) View.VISIBLE else View.INVISIBLE
+
+        }
 
         binding.rvSeries.adapter = episodeAdapter
         binding.rvSeries.addItemDecoration(EpisodeItemDecoration())
@@ -64,10 +61,7 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
         viewModel.seriesInfo.observe(this) {
             binding.tvToolbarTitle.text = it.title
             with(binding.layoutHeader) {
-                val layoutParams = ivThumbnail.layoutParams as? ConstraintLayout.LayoutParams
-                layoutParams?.dimensionRatio = if (it.isBookCover) "1:1.5" else "1:1"
-                ivThumbnail.layoutParams = layoutParams
-
+                updateDimensionRatioByThumbnailType(ivThumbnail, it.isBookCover)
                 ivThumbnail.loadUrl(it.thumbnailUrl)
                 tvTitle.text = it.title
                 tvCreator.text = it.creator
@@ -75,8 +69,10 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
         }
 
         viewModel.episodeVoList.observe(this) {
+            hideError()
             val episodeListWithTitle = it.toMutableList()
-            episodeListWithTitle.add(0, EpisodeVo.SectionName(getString(R.string.episode_count_format, it.size)))
+            episodeListWithTitle.add(0,
+                EpisodeVo.SectionName(getString(R.string.episode_count_format, it.size)))
             episodeAdapter.submitList(episodeListWithTitle)
         }
 
@@ -89,20 +85,12 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
 
             when (it.status) {
                 State.Error.STATUS_JSON_ERROR, State.Error.STATUS_EMPTY -> {
-                    binding.rvSeries.isVisible = false
-                    binding.layoutError.content.isVisible = true
-
-                    binding.layoutError.ivError.setImageDrawable(
-                        ContextCompat.getDrawable(this, Error.Empty.iconRes))
-                    binding.layoutError.tvErrorMessage.text = getString(Error.Empty.message)
+                    showError()
+                    fetchErrorLayout(Error.Empty)
                 }
                 else -> {
-                    binding.rvSeries.isVisible = false
-                    binding.layoutError.content.isVisible = true
-
-                    binding.layoutError.ivError.setImageDrawable(
-                        ContextCompat.getDrawable(this, Error.Network.iconRes))
-                    binding.layoutError.tvErrorMessage.text = getString(Error.Network.message)
+                    showError()
+                    fetchErrorLayout(Error.Network)
                 }
             }
         }
@@ -114,19 +102,26 @@ class SeriesActivity : BaseActivity<ActivitySeriesBinding>(ActivitySeriesBinding
         viewModel.loadEpisodeList()
     }
 
-    private fun clearStatusBarColor() {
-        window.apply {
-            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
-    }
-
     private fun fetchHeaderWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.ctlSeries) { _, insets ->
             val statusBarHeight = insets.getInsets(WindowInsetsCompat.Type.statusBars()).top
             binding.ablSeries.updatePadding(top = statusBarHeight)
             insets
         }
+    }
+
+    private fun showError() {
+        binding.rvSeries.isVisible = false
+        binding.layoutError.content.isVisible = true
+    }
+
+    private fun hideError() {
+        binding.rvSeries.isVisible = true
+        binding.layoutError.content.isVisible = false
+    }
+
+    private fun fetchErrorLayout(error: Error) {
+        binding.layoutError.fetchError(error)
     }
 
     companion object {

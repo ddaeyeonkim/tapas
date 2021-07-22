@@ -2,13 +2,13 @@ package com.improve777.tapas.ui.browse
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import com.improve777.tapas.base.BaseAdapter
 import com.improve777.tapas.base.BaseViewHolder
 import com.improve777.tapas.databinding.ItemBrowseBinding
 import com.improve777.tapas.domain.model.Series
 import com.improve777.tapas.ui.utils.loadUrl
+import com.improve777.tapas.ui.utils.updateDimensionRatioByThumbnailType
 
 class SeriesAdapter(
     private val onItemClick: (seriesId: Int) -> Unit,
@@ -27,9 +27,7 @@ class SeriesAdapter(
 class ViewHolder(private val binding: ItemBrowseBinding) : BaseViewHolder<Series>(binding.root) {
 
     override fun bind(item: Series) {
-        val layoutParams = binding.ivThumbnail.layoutParams as? ConstraintLayout.LayoutParams
-        layoutParams?.dimensionRatio = if (item.isBookCover) "1:1.5" else "1:1"
-        binding.ivThumbnail.layoutParams = layoutParams
+        updateDimensionRatioByThumbnailType(binding.ivThumbnail, item.isBookCover)
         binding.ivThumbnail.loadUrl(item.thumbnailUrl)
 
         binding.tvTitle.isVisible = !item.isBookCover && item.title.isNotBlank()
